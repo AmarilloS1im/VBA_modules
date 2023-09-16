@@ -25,9 +25,10 @@ Attribute find_RU_codes_by_colors.VB_ProcData.VB_Invoke_Func = " \n14"
     For Each i_color In user_color
         On Error Resume Next
         For Each cellcheck In my_range
-            If i_color = cellcheck.Value Then
-                ru_collection.Add cellcheck.End(xlUp), CStr(cellcheck.End(xlUp))
-            End If
+            'MsgBox cellcheck.Find(i_color).End(xlUp).Text
+            'If i_color = cellcheck.Value Then
+            ru_collection.Add cellcheck.Find(i_color).End(xlUp), CStr(cellcheck.Find(i_color).End(xlUp))
+            'End If
         Next cellcheck
         On Error GoTo 0
     Next i_color
