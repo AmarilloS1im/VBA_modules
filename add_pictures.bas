@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "add_pictures_to_cells"
 Function find_extension(ByVal file_name As String)
 
     Dim splited_array() As String
@@ -27,27 +27,24 @@ End Function
 
 Sub add_picture_to_cell()
     Dim fso As Object
-    Dim oShp As Shape
     Dim myFolder As Object
     Dim myPath As String
-    Dim newPath As String
     Dim myFile, myFiles(), i
-    Dim new_collection As Collection
     Dim article As Range
     Dim file_name_without_ext As String
     Dim error_string As String
     Dim myDict As Object
-    Dim extension
-    Dim addres_to_insert_cell
-    
-    
-    
-    
+    Dim extension As String
+    Dim user_range As Range
+    Dim cell_to_add_pic As Variant
     
     
     myPath = Application.InputBox("Выберите путь к файлам", Type:=2)
     
-
+    Set user_range = Application.InputBox("Выберите диапазон артикулов", Type:=8)
+    
+    cell_to_add_pic = Application.InputBox("Укажите номер столбца куда добавить картинки. Счет ночинается отосительно столбка с артикулами", Type:=1)
+    
     Set fso = CreateObject("Scripting.FileSystemObject")
     
     Set myFolder = fso.GetFolder(myPath)
@@ -56,47 +53,59 @@ Sub add_picture_to_cell()
         MsgBox "В папке «" & myPath & "» файлов нет"
         Exit Sub
     End If
+    
     Set myDict = CreateObject("Scripting.Dictionary")
     
-    On Error Resume Next
-    For Each article In ThisWorkbook.Worksheets(1).Range(Cells(1, 1), Cells(1, 1).End(xlDown))
-        article.Offset(0, 1).RowHeight = 60
-        article.Offset(0, 1).ColumnWidth = 17
-        myDict.Add CStr(article), CStr(article)
-    Next article
-    On Error GoTo 0
     
+    If user_range.Count = "1048576" Then
+        Set user_range = ActiveWorkbook.Worksheets(1).Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column).End(xlDown))
+    Else
+
+    End If
+    
+   
     'Загружаем в массив полные имена файлов
     ReDim myFiles(1 To myFolder.Files.Count)
-    i = 1
+    On Error Resume Next
     For Each myFile In myFolder.Files
         If myFile.Name <> "Thumbs.db" Then
             file_name_without_ext = find_file_name(myFile.Name)
             extension = find_extension(myFile.Name)
-            
-            If myDict.Exists(file_name_without_ext) Then
-                ActiveSheet.Pictures.Insert(myPath & "\" & file_name_without_ext & extension).Select
-                Selection.Cut
-                Range("A1:A15").Find(file_name_without_ext).Offset(0, 1).Select
-                ActiveSheet.Paste
-                With ActiveSheet.Shapes(ActiveSheet.Shapes(i).Name)
-                   Set c = .TopLeftCell
-                  .LockAspectRatio = msoFalse
-                  .Left = c.Left
-                  .Top = c.Top
-                  .Width = c.Width
-                  .Height = c.Height
-                End With
-                i = i + 1
-            Else
-                MsgBox "нет картинки"
-                
-            End If
+            myDict.Add CStr(file_name_without_ext), CStr(extension)
+        Else
+        
         End If
     Next myFile
-
     
-    MsgBox "Картинки добавлены"
+    On Error GoTo 0
+    i = 1
+    For Each article In ActiveWorkbook.Worksheets(1).Range(user_range.Address)
+        article.Offset(0, cell_to_add_pic).RowHeight = 110
+        article.Offset(0, cell_to_add_pic).ColumnWidth = 28
+        If myDict.Exists(article.Value) Then
+            ActiveSheet.Pictures.Insert(myPath & "\" & article & myDict.Item(article.Value)).Select
+            Selection.Cut
+            article.Offset(0, cell_to_add_pic).Select
+            ActiveSheet.Paste
+            With ActiveSheet.Shapes(ActiveSheet.Shapes(i).Name)
+               Set c = .TopLeftCell
+              .LockAspectRatio = msoFalse
+              .Left = c.Left
+              .Top = c.Top
+              .Width = c.Width
+              .Height = c.Height
+            End With
+            i = i + 1
+        Else
+            error_string = error_string & article & vbCrLf
+        End If
+     Next article
+
+    If error_string <> "" Then
+        MsgBox "Следующие артикулы не найдены среди файлов в выбранной папке: " & vbCrLf & error_string
+    Else
+        MsgBox "Все картинки из указанной папки успешно добавлены"
+    End If
     
     ActiveSheet.Shapes.SelectAll
     Selection.Placement = xlMoveAndSize
