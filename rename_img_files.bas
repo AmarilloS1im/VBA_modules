@@ -64,7 +64,7 @@ Sub Rename_File()
     Set myDict = CreateObject("Scripting.Dictionary")
     
     On Error Resume Next
-    For Each article In ThisWorkbook.Worksheets(1).Range(Cells(1, 1), Cells(1, 1).End(xlDown))
+    For Each article In ActiveWorkbook.Worksheets(1).Range(Cells(1, 1), Cells(1, 1).End(xlDown))
         myDict.Add CStr(article), CStr(article.Offset(0, 6))
     Next article
     On Error GoTo 0
