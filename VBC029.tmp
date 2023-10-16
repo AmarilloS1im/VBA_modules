@@ -1,0 +1,117 @@
+Attribute VB_Name = "Module1"
+Function find_extension(ByVal file_name As String)
+
+    Dim splited_array() As String
+    Dim extension_string As String
+    
+    splited_array = Split(file_name, ".")
+    
+    extension_string = extension_string & "." & CStr(splited_array(UBound(splited_array)))
+    
+    find_extension = extension_string
+    
+End Function
+Function find_file_name(ByVal file_name As String)
+    Dim array_file() As String
+    Dim i As Integer
+    Dim file_name_no_ext As String
+    
+    array_file = Split(file_name, ".")
+    
+    For i = 0 To UBound(array_file) - 1
+        file_name_no_ext = file_name_no_ext + array_file(i) + "."
+    Next i
+    file_name_no_ext = Left(file_name_no_ext, (Len(file_name_no_ext) - 1))
+    find_file_name = file_name_no_ext
+End Function
+
+Sub find_approximate_article()
+    Dim fso As Object
+    Dim myFolder As Object
+    Dim myPath As String
+    Dim myFile, myFiles(), i
+    Dim article As Range
+    Dim file_name_without_ext As String
+    Dim error_string As String
+    Dim myDict As Object
+    Dim extension As String
+    Dim user_range As Range
+    Dim cell_to_add_pic As Variant
+    Dim x
+    
+   
+    
+    Dim myRegExp As Object
+    Set myRegExp = CreateObject("VBScript.RegExp")
+    
+    
+    
+    myPath = Application.InputBox("Выберите путь к файлам: ", Type:=2)
+    
+    Set user_range = Application.InputBox("Выберите диапазон с артикулами: ", Type:=8)
+    
+    cell_to_add_pic = Application.InputBox("Укажите номер столбца куда добавить картинки." _
+    & vbCrLf & "Счет начинается относительно столбца с артикулами." _
+    & vbCrLf & "Если нужный столбец левее столбца с артикулами, то нужно поставить знак - (минус) перд цифрой", Type:=1)
+    
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    Set myFolder = fso.GetFolder(myPath)
+    
+    If myFolder.Files.Count = 0 Then
+        MsgBox "В папке «" & myPath & "» файлов нет"
+        Exit Sub
+    End If
+    
+    If user_range.Count = "1048576" Then
+        Set user_range = ActiveWorkbook.Worksheets(1).Range(Cells(user_range.Row, user_range.Column), _
+        Cells(user_range.Row, user_range.Column).End(xlDown))
+        If user_range.End(xlDown).Offset(1, 0) <> "" Then
+            Set user_range = ActiveWorkbook.Worksheets(1).Range(Cells(user_range.End(xlDown).Row, user_range.Column), _
+            Cells(user_range.End(xlDown).End(xlDown).Row, user_range.Column))
+        Else
+        End If
+    Else
+    End If
+    
+    
+    ReDim myFiles(1 To myFolder.Files.Count)
+    On Error Resume Next
+    For Each myFile In myFolder.Files
+        If myFile.Name <> "Thumbs.db" Then
+            file_name_without_ext = find_file_name(myFile.Name)
+            extension = find_extension(myFile.Name)
+            For Each article In Range(user_range.Address)
+                With myRegExp
+                    .Global = True
+                    .Pattern = article.Value
+                    Set myobj = .Test(file_name_without_ext)
+                    
+                End With
+                If myobj = True Then
+                    article.Offset(0, cell_to_add_pic) = file_name_without_ext
+                    
+                Else
+                End If
+            Next article
+            
+                    
+        Else
+        
+        End If
+    Next myFile
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+End Sub

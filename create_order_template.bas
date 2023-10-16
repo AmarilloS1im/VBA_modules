@@ -13,21 +13,23 @@ Sub create_order_template()
         Cells(1, 1).Value = "Order №"
         Cells(2, 1).Value = "Order date"
         Cells(3, 1).Value = "Readiness date"
+        Cells(4, 1).Value = "Confirmed readiness date by supplier"
+        
         Cells(1, 2).Value = order_number
         Cells(2, 2).Value = order_date
         Cells(3, 2).Value = readiness_date
-        Cells(4, 1).Value = "Confirmed readiness date by supplier"
-        Cells(4, 2).Value = " "
+        Cells(4, 2).Value = "?? ?? ????"
         
+
         
-        Cells(5, 1).Value = "Photo"
-        Cells(5, 2).Value = "Article"
-        Cells(5, 3).Value = "Model"
-        Cells(5, 4).Value = "Color"
-        Cells(5, 5).Value = "ART № Rehard"
-        Cells(5, 6).Value = "Model Rehard"
-        Cells(5, 7).Value = "Color Rehard"
-        Cells(5, 8).Value = "Gender"
+        Cells(5, 1).Value = "Article"
+        Cells(5, 2).Value = "Model"
+        Cells(5, 3).Value = "Color"
+        Cells(5, 4).Value = "ART № Rehard"
+        Cells(5, 5).Value = "Model Rehard"
+        Cells(5, 6).Value = "Color Rehard"
+        Cells(5, 7).Value = "Gender"
+        Cells(5, 8).Value = "Photo"
         Cells(5, 9).Value = "UP material"
         Cells(5, 10).Value = "Lining"
         Cells(5, 11).Value = "Insole"
@@ -60,7 +62,35 @@ Sub create_order_template()
         
     Range("A5:AT5").Interior.Color = 15917529
     Range("A1:A4").Font.Color = 1137094
-    Range("E5:G5").Font.Color = 192
+    Range("A1:A4").Select
+    
+    Range("B4").Font.Color = 192
+    
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+    With Selection
+        .HorizontalAlignment = xlGeneral
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+    
+    
+    Range("D5:F5").Font.Color = 192
     
     With ThisWorkbook.ActiveSheet.Range("N4:AR4")
         .MergeCells = True
@@ -71,37 +101,78 @@ Sub create_order_template()
     Range("B6:B1048576").ColumnWidth = 25
     Range("B6:B1048576").RowHeight = 85
     
-    
-    
-    
-    
-    
-    Dim objCloseBook As Workbook
-    
-    
-    MsgBox "Откойте 'Рабочий файл' в нужной папке" & vbCrLf & "*****************************************"
-    'Открываем рабочий файл
-    order_file = Application.GetOpenFilename("Excel files(*.xls*),*.xls*", 1, "Выбрать Excel файлы", , False)
-    
-    'Отключаем обновление экрана
-    Application.ScreenUpdating = False
-    Set objCloseBook = Workbooks.Open(order_file)
-    If VarType(order_file) = vbBoolean Then
-        'Была нажата кнопка отмены-выход из процедуры
-        Exit Sub
-    End If
-    i = 6
-    For Each article In objCloseBook.Worksheets(1).Range("I2:I148")
-        Workbooks("1.xlsx").Worksheets(1).Cells(i, 2) = article.Value
-        i = i + 1
-    Next article
-    
-    
-    objCloseBook.Close False
+    Rows("5:5").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
 
     
     
-    Application.ScreenUpdating = True
+    
+    
+    
+    
+    'Dim objCloseBook As Workbook
+    
+    
+    'MsgBox "Откойте 'Рабочий файл' в нужной папке" & vbCrLf & "*****************************************"
+    'Открываем рабочий файл
+    'order_file = Application.GetOpenFilename("Excel files(*.xls*),*.xls*", 1, "Выбрать Excel файлы", , False)
+    
+    'Отключаем обновление экрана
+    'Application.ScreenUpdating = False
+    'Set objCloseBook = Workbooks.Open(order_file)
+    'If VarType(order_file) = vbBoolean Then
+        'Была нажата кнопка отмены-выход из процедуры
+        'Exit Sub
+    'End If
+    'i = 6
+    'For Each article In objCloseBook.Worksheets(1).Range("I2:I148")
+        'Workbooks("1.xlsx").Worksheets(1).Cells(i, 2) = article.Value
+        'i = i + 1
+    'Next article
+    
+    
+    'objCloseBook.Close False
+
+    
+    
+    'Application.ScreenUpdating = True
     
     
         
