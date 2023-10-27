@@ -122,9 +122,9 @@ Sub add_picture_to_cell()
                       .Height = c.Height
                     End With
                  Else
-                    ActiveSheet.Pictures.Insert(myPath & "\" & article & myDict.item(article.Value)).Select
-                    Selection.Name = article & "_" & "Копия" & i
-                    shape_name = article & "_" & "Копия" & i
+                    ActiveSheet.Pictures.Insert(myPath & "\" & CStr(article) & myDict.item(CStr(article.Value))).Select
+                    Selection.Name = CStr(article) & "_" & "Копия" & i
+                    shape_name = CStr(article) & "_" & "Копия" & i
                     Selection.Cut
                     article.Offset(0, cell_to_add_pic).Select
                     ActiveSheet.Paste
@@ -180,4 +180,5 @@ Sub add_picture_to_cell()
     Selection.Placement = xlMoveAndSize
     
 End Sub
+
 
