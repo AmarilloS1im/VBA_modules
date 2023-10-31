@@ -1,0 +1,88 @@
+Attribute VB_Name = "Module11"
+Sub packing_split()
+    'Application.AutoRecover.Enabled = False
+    Dim user_range As Range
+    Dim article As Range
+    Dim size As Range
+    Dim size_range As Range
+    Dim offset_count As Integer
+    Dim last_col_on_sheet As Long
+    Dim added_rows_count As Integer
+    Dim art_pos_count As Long
+    Dim i As Long
+    Dim j As Long
+    Dim count_len As Long
+    'Dim first_carton As Variant
+    'Dim last_carton As Variant
+    Dim for_index As Long
+    Dim n As Variant
+    Dim cartons_count As Integer
+    'Dim carton_list As New Collection
+    Dim carton_num As Range
+    Dim first_num As Long
+    Dim last_num As Long
+    Dim control_num As Variant
+    Dim loop_count As Long
+    Dim total_cicle_count As Integer
+    
+    
+    last_col_on_sheet = Cells(1, Columns.Count).End(xlToRight).Column
+    
+    Set user_range = Application.InputBox("Выберите диапазон с номерами коробок: ", Type:=8)
+    
+    'Application.ScreenUpdating = False
+    
+    'Считаем длину изначального рейнджа с артикулами
+    For Each article In Range(user_range.Address)
+        count_len = count_len + 1
+    Next article
+    
+    
+    Do
+        total_cicle_count = total_cicle_count + 1
+        loop_count = 0
+        loop_count = total_cicle_count
+        control_num = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column)).Value
+        If InStr(control_num, "-") Then
+            control_num = CInt(Split(control_num, "-")(0))
+        Else
+        End If
+        'Application.Wait Now + TimeSerial(0, 0, 2)
+        
+        For Each carton_num In Range(user_range.Address)
+            'MsgBox user_range.Address
+            'MsgBox carton_num.Address
+            
+            'MsgBox carton_num
+            
+            If InStr(carton_num, "-") Then
+                first_num = CInt(Split(carton_num, "-")(0))
+                last_num = CInt(Split(carton_num, "-")(1))
+            Else
+                first_num = CInt(carton_num)
+                last_num = CInt(carton_num)
+            End If
+            
+            
+            If first_num >= control_num Then
+                control_num = last_num
+                loop_count = loop_count + 1
+                'MsgBox loop_count
+            Else
+                Rows(carton_num.Row - 1).Select
+                Selection.Cut
+                Rows(carton_num.Row + 1).Select
+                Selection.Insert Shift:=xlDown
+                control_num = last_num
+            End If
+            
+
+        Next carton_num
+        MsgBox loop_count
+        
+         
+     Loop While loop_count < count_len
+    
+     'Application.ScreenUpdating = False
+     MsgBox "end"
+End Sub
