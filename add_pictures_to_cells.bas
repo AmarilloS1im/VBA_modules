@@ -1,4 +1,4 @@
-Attribute VB_Name = "add_pictures_to_cells"
+Attribute VB_Name = "Module1"
 Public flag As Boolean
 Function find_extension(ByVal file_name As String)
 
@@ -106,12 +106,14 @@ Sub add_picture_to_cell()
         If myDict.Exists(CStr(article.Value)) Then
             If flag = True Then
                 If curren_article <> prev_article Then
-                    ActiveSheet.Pictures.Insert(myPath & "\" & article & myDict.item(CStr(article.Value))).Select
+                    ActiveSheet.Pictures.Insert(myPath & "\" & article & myDict.Item(CStr(article.Value))).Select
                     Selection.Name = CStr(article)
                     shape_name = CStr(article)
                     Selection.Cut
                     article.Offset(0, cell_to_add_pic).Select
-                    ActiveSheet.Paste
+                    ActiveSheet.Pictures.Paste.Select
+                    Selection.Name = CStr(article)
+                    shape_name = CStr(article)
                     With ActiveSheet.Shapes(shape_name)
                        Set c = Range(article.Offset(0, cell_to_add_pic).Address)
                        
@@ -122,12 +124,14 @@ Sub add_picture_to_cell()
                       .Height = c.Height
                     End With
                  Else
-                    ActiveSheet.Pictures.Insert(myPath & "\" & CStr(article) & myDict.item(CStr(article.Value))).Select
+                    ActiveSheet.Pictures.Insert(myPath & "\" & CStr(article) & myDict.Item(CStr(article.Value))).Select
                     Selection.Name = CStr(article) & "_" & "Копия" & i
                     shape_name = CStr(article) & "_" & "Копия" & i
                     Selection.Cut
                     article.Offset(0, cell_to_add_pic).Select
-                    ActiveSheet.Paste
+                    ActiveSheet.Pictures.Paste.Select
+                    Selection.Name = CStr(article) & "_" & "Копия" & i
+                    shape_name = CStr(article) & "_" & "Копия" & i
                     With ActiveSheet.Shapes(shape_name)
                        Set c = Range(article.Offset(0, cell_to_add_pic).Address)
                        
@@ -144,12 +148,14 @@ Sub add_picture_to_cell()
                  prev_article = CStr(article.Value)
             Else
                 If curren_article <> prev_article Then
-                    ActiveSheet.Pictures.Insert(myPath & "\" & CStr(article) & myDict.item(CStr(article.Value))).Select
+                    ActiveSheet.Pictures.Insert(myPath & "\" & CStr(article) & myDict.Item(CStr(article.Value))).Select
                     Selection.Name = CStr(article)
                     shape_name = CStr(article)
                     Selection.Cut
                     article.Offset(0, cell_to_add_pic).Select
-                    ActiveSheet.Paste
+                    ActiveSheet.Pictures.Paste.Select
+                    Selection.Name = CStr(article)
+                    shape_name = CStr(article)
                     With ActiveSheet.Shapes(shape_name)
                        Set c = Range(article.Offset(0, cell_to_add_pic).Address)
                        
@@ -180,5 +186,4 @@ Sub add_picture_to_cell()
     Selection.Placement = xlMoveAndSize
     
 End Sub
-
 

@@ -1,5 +1,5 @@
-Attribute VB_Name = "packing_split"
-Sub packing_split()
+Attribute VB_Name = "pk_split_sort_size_add"
+Sub packing_split_and_sort_and_size_add()
     Dim user_range As Range
     Dim article As Range
     Dim size As Range
@@ -19,11 +19,23 @@ Sub packing_split()
     Dim carton_list As New Collection
     Dim control_num As Variant
     Dim loop_count As Long
+    Dim size_range_offset_count As Long
+    Dim new_range As Range
+    Dim count_new_rows As Long
+    
     
     
     last_col_on_sheet = Cells(1, Columns.count).End(xlToRight).Column
     
     Set user_range = Application.InputBox("Выберите диапазон с номерами коробок: ", Type:=8)
+    
+    Set size_range = Application.InputBox("Выберите диапазон с размерной сеткой: ", Type:=8)
+    
+    cell_to_add_size = Application.InputBox("Укажите номер столбца куда добавить размеры." _
+    & vbCrLf & "Счет с первого столбца.", Type:=1)
+    
+    cell_to_add_quantity = Application.InputBox("Укажите номер столбца куда добавить количество." _
+    & vbCrLf & "Счет с первого столбца.", Type:=1)
     
     Application.ScreenUpdating = False
     
@@ -63,8 +75,8 @@ Sub packing_split()
             End If
         Next carton_num
      Loop While loop_count <> 0
-     'Application.ScreenUpdating = False
-    
+     
+    'Сплитуем коробки
     first_carton = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column)).Value
     first_carton = CInt(Split(first_carton, "-")(0))
     
@@ -92,6 +104,8 @@ Sub packing_split()
             Range(Cells(article.Row + art_pos_count, 1), Cells(article.Row + art_pos_count, last_col_on_sheet)).Offset(1, 0).Select
             Selection.Insert Shift:=xlDown
             Cells(article.Row + art_pos_count, article.Column).Value = carton_list(n)
+            count_new_rows = count_new_rows + 1
+            
             added_rows_count = added_rows_count + 1
             art_pos_count = art_pos_count + 1
             n = n + 1
@@ -99,6 +113,38 @@ Sub packing_split()
         Selection.Delete Shift:=xlUp
         Set user_range = Range(Cells(user_range.Row + art_pos_count, user_range.Column), Cells(user_range.Row + art_pos_count, user_range.Column))
     Next
+    
+    'Разбиваем строки по размерам и количествам
+    Set new_range = Range(Cells(user_range.Row - count_new_rows, user_range.Column), Cells(user_range.Row - 1, user_range.Column))
+    Set user_range = Range(new_range.Address)
+    count_len = 0
+    For Each article In Range(user_range.Address)
+        count_len = count_len + 1
+    Next article
+    size_count = 0
+    size_range_offset_count = 1
+    For i = 1 To count_len
+        user_range.Select
+        Set article = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column))
+        added_rows_count = 1
+        art_pos_count = 0
+        For Each size In size_range.Offset(size_range_offset_count, 0)
+            If size.Value <> "" Then
+                Cells(article.Row + art_pos_count, cell_to_add_quantity).Value = size.Value
+                Cells(article.Row + art_pos_count, cell_to_add_size).Value = Cells(size_range.Row, size.Column).Value
+                Range(Cells(article.Row + art_pos_count, 1), Cells(article.Row + art_pos_count, last_col_on_sheet)).Offset(1, 0).Select
+                Selection.Insert Shift:=xlDown
+                Cells(article.Row + art_pos_count + 1, article.Column).Value = article.Value
+                added_rows_count = added_rows_count + 1
+                art_pos_count = art_pos_count + 1
+                size_range_offset_count = size_range_offset_count + 1
+            Else
+            End If
+         Next size
+         Selection.Delete Shift:=xlUp
+         Set user_range = Range(Cells(user_range.Row + art_pos_count, user_range.Column), Cells(user_range.Row + art_pos_count, user_range.Column))
+      Next
+    
     Application.ScreenUpdating = True
     
 End Sub
