@@ -24,29 +24,30 @@ Sub packing_split_and_sort_and_size_add()
     Dim count_new_rows As Long
     
     
-    MsgBox ("Р’РќРРњРђРќРР•!" _
-    & vbCrLf & "РљРѕР»РѕРЅРєР° СЃ РЅРѕРјРµСЂР°РјРё РєРѕСЂРѕР±РѕРє, РєРѕР»РёС‡РµСЃС‚РІРѕРј РєРѕСЂРѕР±РѕРє, РєРѕР»РёС‡РµСЃС‚РІРѕРј РІ РєРѕСЂРѕР±РєРµ Рё РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІ РєРѕСЂРѕР±РєРµ РґРѕР»Р¶РЅС‹ СЃС‚РѕСЏС‚СЊ Р»РµРІРµРµ СЂР°Р·РјРµСЂРЅРѕР№ СЃРµС‚РєРё")
+    MsgBox ("ВНИМАНИЕ!" _
+    & vbCrLf & "Колонка с номерами коробок, количеством коробок, количеством в коробке и общее количество пар должны стоять левее размерной сетки" _
+    & vbCrLf & "" & vbCrLf & "Порядок колонок слева направо следующий: Колонка с номерами коробок, количество коробок, количество в коробке, общее количество пар.")
     
     last_col_on_sheet = Cells(1, Columns.Count).End(xlToRight).Column
     
-    Set user_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ РЅРѕРјРµСЂР°РјРё РєРѕСЂРѕР±РѕРє: ", Type:=8)
+    Set user_range = Application.InputBox("Выберите диапазон с номерами коробок: ", Type:=8)
     
-    Set size_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ СЂР°Р·РјРµСЂРЅРѕР№ СЃРµС‚РєРѕР№: ", Type:=8)
+    Set size_range = Application.InputBox("Выберите диапазон с размерной сеткой: ", Type:=8)
     
-    cell_to_add_size = Application.InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° РєСѓРґР° РґРѕР±Р°РІРёС‚СЊ СЂР°Р·РјРµСЂС‹." _
-    & vbCrLf & "РЎС‡РµС‚ СЃ РїРµСЂРІРѕРіРѕ СЃС‚РѕР»Р±С†Р°.", Type:=1)
+    cell_to_add_size = Application.InputBox("Укажите номер столбца куда добавить размеры." _
+    & vbCrLf & "Счет с первого столбца.", Type:=1)
     
-    cell_to_add_quantity = Application.InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° РєСѓРґР° РґРѕР±Р°РІРёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ." _
-    & vbCrLf & "РЎС‡РµС‚ СЃ РїРµСЂРІРѕРіРѕ СЃС‚РѕР»Р±С†Р°.", Type:=1)
+    cell_to_add_quantity = Application.InputBox("Укажите номер столбца куда добавить количество." _
+    & vbCrLf & "Счет с первого столбца.", Type:=1)
     
     Application.ScreenUpdating = False
     
-    'РЎС‡РёС‚Р°РµРј РґР»РёРЅСѓ РёР·РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЂРµР№РЅРґР¶Р° СЃ Р°СЂС‚РёРєСѓР»Р°РјРё
+    'Считаем длину изначального рейнджа с артикулами
     For Each article In Range(user_range.Address)
         count_len = count_len + 1
     Next article
     
-    'РЎРѕСЂС‚РёСЂСѓРµРј РєРѕСЂРѕР±РєРё РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
+    'Сортируем коробки по возрастанию
     Do
         loop_count = 0
         control_num = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column)).Value
@@ -78,7 +79,7 @@ Sub packing_split_and_sort_and_size_add()
         Next carton_num
      Loop While loop_count <> 0
      
-    'РЎРїР»РёС‚СѓРµРј РєРѕСЂРѕР±РєРё
+    'Сплитуем коробки
     first_carton = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column)).Value
     first_carton = CInt(Split(first_carton, "-")(0))
     
@@ -116,7 +117,7 @@ Sub packing_split_and_sort_and_size_add()
         Set user_range = Range(Cells(user_range.Row + art_pos_count, user_range.Column), Cells(user_range.Row + art_pos_count, user_range.Column))
     Next
     
-    'Р Р°Р·Р±РёРІР°РµРј СЃС‚СЂРѕРєРё РїРѕ СЂР°Р·РјРµСЂР°Рј Рё РєРѕР»РёС‡РµСЃС‚РІР°Рј
+    'Разбиваем строки по размерам и количествам
     Set new_range = Range(Cells(user_range.Row - count_new_rows, user_range.Column), Cells(user_range.Row - 1, user_range.Column))
     Set user_range = Range(new_range.Address)
     count_len = 0
