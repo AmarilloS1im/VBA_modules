@@ -24,8 +24,10 @@ Sub packing_split_and_sort_and_size_add()
     Dim count_new_rows As Long
     
     
+    MsgBox ("ВНИМАНИЕ!" _
+    & vbCrLf & "Колонка с номерами коробок, количеством коробок, количеством в коробке и общее количество в коробке должны стоять левее размерной сетки")
     
-    last_col_on_sheet = Cells(1, Columns.count).End(xlToRight).Column
+    last_col_on_sheet = Cells(1, Columns.Count).End(xlToRight).Column
     
     Set user_range = Application.InputBox("Выберите диапазон с номерами коробок: ", Type:=8)
     
@@ -83,7 +85,7 @@ Sub packing_split_and_sort_and_size_add()
     last_carton = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column)).End(xlDown).Value
 
     If InStr(last_carton, "-") Then
-        last_carton = last_carton = CInt(Split(last_carton, "-")(1))
+        last_carton = CInt(Split(last_carton, "-")(1))
     Else
         last_carton = CInt(last_carton)
     End If
