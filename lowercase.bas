@@ -1,4 +1,4 @@
 Attribute VB_Name = "lowercase"
-Function нижрег(текст As String)
-    нижрег = LCase(текст)
+Function РЅРёР¶СЂРµРі(С‚РµРєСЃС‚ As String)
+    РЅРёР¶СЂРµРі = LCase(С‚РµРєСЃС‚)
 End Function

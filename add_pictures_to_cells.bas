@@ -46,28 +46,28 @@ Sub add_picture_to_cell()
     
     
     
-    myPath = Application.InputBox("Выберите путь к файлам: ", Type:=2)
+    myPath = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РїСѓС‚СЊ Рє С„Р°Р№Р»Р°Рј: ", Type:=2)
     
-    Set user_range = Application.InputBox("Выберите диапазон с артикулами: ", Type:=8)
+    Set user_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ Р°СЂС‚РёРєСѓР»Р°РјРё: ", Type:=8)
     
-    cell_to_add_pic = Application.InputBox("Укажите номер столбца куда добавить картинки." _
-    & vbCrLf & "Счет начинается относительно столбца с артикулами." _
-    & vbCrLf & "Если нужный столбец левее столбца с артикулами, то нужно поставить знак - (минус) перд цифрой", Type:=1)
+    cell_to_add_pic = Application.InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° РєСѓРґР° РґРѕР±Р°РІРёС‚СЊ РєР°СЂС‚РёРЅРєРё." _
+    & vbCrLf & "РЎС‡РµС‚ РЅР°С‡РёРЅР°РµС‚СЃСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЃС‚РѕР»Р±С†Р° СЃ Р°СЂС‚РёРєСѓР»Р°РјРё." _
+    & vbCrLf & "Р•СЃР»Рё РЅСѓР¶РЅС‹Р№ СЃС‚РѕР»Р±РµС† Р»РµРІРµРµ СЃС‚РѕР»Р±С†Р° СЃ Р°СЂС‚РёРєСѓР»Р°РјРё, С‚Рѕ РЅСѓР¶РЅРѕ РїРѕСЃС‚Р°РІРёС‚СЊ Р·РЅР°Рє - (РјРёРЅСѓСЃ) РїРµСЂРґ С†РёС„СЂРѕР№", Type:=1)
     
     Set fso = CreateObject("Scripting.FileSystemObject")
     
     Set myFolder = fso.GetFolder(myPath)
     
     If myFolder.Files.Count = 0 Then
-        MsgBox "В папке «" & myPath & "» файлов нет"
+        MsgBox "Р’ РїР°РїРєРµ В«" & myPath & "В» С„Р°Р№Р»РѕРІ РЅРµС‚"
         Exit Sub
     End If
     
     Set myDict = CreateObject("Scripting.Dictionary")
     
-    'user_row_height = Application.InputBox("Выберите высоту строки для картинки: ", Type:=2)
+    'user_row_height = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РІС‹СЃРѕС‚Сѓ СЃС‚СЂРѕРєРё РґР»СЏ РєР°СЂС‚РёРЅРєРё: ", Type:=2)
     
-    'user_column_width = Application.InputBox("Выберите ширину столбца для кратинки: ", Type:=2)
+    'user_column_width = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ С€РёСЂРёРЅСѓ СЃС‚РѕР»Р±С†Р° РґР»СЏ РєСЂР°С‚РёРЅРєРё: ", Type:=2)
     
     UserForm1.Show
     
@@ -84,7 +84,7 @@ Sub add_picture_to_cell()
     End If
     
     Application.ScreenUpdating = False
-    'Загружаем в массив полные имена файлов
+    'Р—Р°РіСЂСѓР¶Р°РµРј РІ РјР°СЃСЃРёРІ РїРѕР»РЅС‹Рµ РёРјРµРЅР° С„Р°Р№Р»РѕРІ
     ReDim myFiles(1 To myFolder.Files.Count)
     On Error Resume Next
     For Each myFile In myFolder.Files
@@ -125,13 +125,13 @@ Sub add_picture_to_cell()
                     End With
                  Else
                     ActiveSheet.Pictures.Insert(myPath & "\" & CStr(article) & myDict.Item(CStr(article.Value))).Select
-                    Selection.Name = CStr(article) & "_" & "Копия" & i
-                    shape_name = CStr(article) & "_" & "Копия" & i
+                    Selection.Name = CStr(article) & "_" & "РљРѕРїРёСЏ" & i
+                    shape_name = CStr(article) & "_" & "РљРѕРїРёСЏ" & i
                     Selection.Cut
                     article.Offset(0, cell_to_add_pic).Select
                     ActiveSheet.Pictures.Paste.Select
-                    Selection.Name = CStr(article) & "_" & "Копия" & i
-                    shape_name = CStr(article) & "_" & "Копия" & i
+                    Selection.Name = CStr(article) & "_" & "РљРѕРїРёСЏ" & i
+                    shape_name = CStr(article) & "_" & "РљРѕРїРёСЏ" & i
                     With ActiveSheet.Shapes(shape_name)
                        Set c = Range(article.Offset(0, cell_to_add_pic).Address)
                        
@@ -177,9 +177,9 @@ Sub add_picture_to_cell()
     Application.ScreenUpdating = True
     
     If error_string <> "" Then
-        MsgBox "Следующие артикулы не найдены среди файлов в выбранной папке: " & vbCrLf & error_string
+        MsgBox "РЎР»РµРґСѓСЋС‰РёРµ Р°СЂС‚РёРєСѓР»С‹ РЅРµ РЅР°Р№РґРµРЅС‹ СЃСЂРµРґРё С„Р°Р№Р»РѕРІ РІ РІС‹Р±СЂР°РЅРЅРѕР№ РїР°РїРєРµ: " & vbCrLf & error_string
     Else
-        MsgBox "Все картинки из указанной папки успешно добавлены"
+        MsgBox "Р’СЃРµ РєР°СЂС‚РёРЅРєРё РёР· СѓРєР°Р·Р°РЅРЅРѕР№ РїР°РїРєРё СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅС‹"
     End If
     
     ActiveSheet.Shapes.SelectAll

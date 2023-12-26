@@ -14,17 +14,17 @@ Sub add_rows_and_size_value()
     
     last_col_on_sheet = Cells(1, Columns.count).End(xlToRight).Column
     
-    Set user_range = Application.InputBox("Выберите диапазон с артикулами: ", Type:=8)
+    Set user_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ Р°СЂС‚РёРєСѓР»Р°РјРё: ", Type:=8)
     
-    Set size_range = Application.InputBox("Выберите диапазон с размерной сеткой: ", Type:=8)
+    Set size_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ СЂР°Р·РјРµСЂРЅРѕР№ СЃРµС‚РєРѕР№: ", Type:=8)
     
-    cell_to_add_size = Application.InputBox("Укажите номер столбца куда добавить размеры." _
-    & vbCrLf & "Счет с первого столбца.", Type:=1)
+    cell_to_add_size = Application.InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° РєСѓРґР° РґРѕР±Р°РІРёС‚СЊ СЂР°Р·РјРµСЂС‹." _
+    & vbCrLf & "РЎС‡РµС‚ СЃ РїРµСЂРІРѕРіРѕ СЃС‚РѕР»Р±С†Р°.", Type:=1)
     
-    cell_to_add_quantity = Application.InputBox("Укажите номер столбца куда добавить количество." _
-    & vbCrLf & "Счет с первого столбца.", Type:=1)
+    cell_to_add_quantity = Application.InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° РєСѓРґР° РґРѕР±Р°РІРёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ." _
+    & vbCrLf & "РЎС‡РµС‚ СЃ РїРµСЂРІРѕРіРѕ СЃС‚РѕР»Р±С†Р°.", Type:=1)
     
-    'Считаем длину изначального рейнджа с артикулами
+    'РЎС‡РёС‚Р°РµРј РґР»РёРЅСѓ РёР·РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЂРµР№РЅРґР¶Р° СЃ Р°СЂС‚РёРєСѓР»Р°РјРё
     For Each article In Range(user_range.Address)
         count_len = count_len + 1
     Next article

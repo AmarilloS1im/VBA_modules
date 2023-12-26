@@ -42,12 +42,12 @@ Sub Rename_File()
     
     
     
-    myPath = Application.InputBox("Выберите путь к файлам", Type:=2)
+    myPath = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РїСѓС‚СЊ Рє С„Р°Р№Р»Р°Рј", Type:=2)
     
-    newPath = Application.InputBox("Выберите путь к папке, в которую будут скопированы файлы", Type:=2)
+    newPath = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РїСѓС‚СЊ Рє РїР°РїРєРµ, РІ РєРѕС‚РѕСЂСѓСЋ Р±СѓРґСѓС‚ СЃРєРѕРїРёСЂРѕРІР°РЅС‹ С„Р°Р№Р»С‹", Type:=2)
     
     If myPath = newPath Then
-        MsgBox "Нельзя копировать файлы в оригинальный каталог!!!"
+        MsgBox "РќРµР»СЊР·СЏ РєРѕРїРёСЂРѕРІР°С‚СЊ С„Р°Р№Р»С‹ РІ РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ РєР°С‚Р°Р»РѕРі!!!"
         Exit Sub
     End If
     
@@ -58,7 +58,7 @@ Sub Rename_File()
     Set myFolder = fso.GetFolder(myPath)
     
     If myFolder.Files.Count = 0 Then
-        MsgBox "В папке «" & myPath & "» файлов нет"
+        MsgBox "Р’ РїР°РїРєРµ В«" & myPath & "В» С„Р°Р№Р»РѕРІ РЅРµС‚"
         Exit Sub
     End If
     Set myDict = CreateObject("Scripting.Dictionary")
@@ -70,7 +70,7 @@ Sub Rename_File()
     On Error GoTo 0
     
     error_string = ""
-    'Загружаем в массив полные имена файлов
+    'Р—Р°РіСЂСѓР¶Р°РµРј РІ РјР°СЃСЃРёРІ РїРѕР»РЅС‹Рµ РёРјРµРЅР° С„Р°Р№Р»РѕРІ
     ReDim myFiles(1 To myFolder.Files.Count)
     
     For Each myFile In myFolder.Files
@@ -94,9 +94,9 @@ Sub Rename_File()
 
     
     If error_string <> "" Then
-        MsgBox "Следующие файлы не найдены среди артикулов: " & vbCrLf & error_string
+        MsgBox "РЎР»РµРґСѓСЋС‰РёРµ С„Р°Р№Р»С‹ РЅРµ РЅР°Р№РґРµРЅС‹ СЃСЂРµРґРё Р°СЂС‚РёРєСѓР»РѕРІ: " & vbCrLf & error_string
     Else
-        MsgBox "Все файлы успешно переименованы"
+        MsgBox "Р’СЃРµ С„Р°Р№Р»С‹ СѓСЃРїРµС€РЅРѕ РїРµСЂРµРёРјРµРЅРѕРІР°РЅС‹"
     End If
     
 End Sub

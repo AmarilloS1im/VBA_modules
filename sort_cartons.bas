@@ -14,11 +14,11 @@ Sub sort_carton()
     
     last_col_on_sheet = Cells(1, Columns.Count).End(xlToRight).Column
     
-    Set user_range = Application.InputBox("Выберите диапазон с номерами коробок: ", Type:=8)
+    Set user_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ РЅРѕРјРµСЂР°РјРё РєРѕСЂРѕР±РѕРє: ", Type:=8)
     
     Application.ScreenUpdating = False
     
-    'Считаем длину изначального рейнджа с артикулами
+    'РЎС‡РёС‚Р°РµРј РґР»РёРЅСѓ РёР·РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЂРµР№РЅРґР¶Р° СЃ Р°СЂС‚РёРєСѓР»Р°РјРё
     For Each article In Range(user_range.Address)
         count_len = count_len + 1
     Next article

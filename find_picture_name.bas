@@ -3,7 +3,7 @@ Sub find_picture_name()
     If TypeName(Selection) = "Picture" Then
         MsgBox Selection.Name
     Else
-        MsgBox "Сначала выберите изображение"
+        MsgBox "РЎРЅР°С‡Р°Р»Р° РІС‹Р±РµСЂРёС‚Рµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ"
         Exit Sub
     End If
 End Sub

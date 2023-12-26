@@ -1,4 +1,4 @@
 Attribute VB_Name = "uppercase"
-Function βεπυπεγ(ςεκρς As String)
-    βεπυπεγ = UCase(ςεκρς)
+Function Π²ΠµΡ€Ρ…Ρ€ΠµΠ³(Ρ‚ΠµΠΊΡΡ‚ As String)
+    Π²ΠµΡ€Ρ…Ρ€ΠµΠ³ = UCase(Ρ‚ΠµΠΊΡΡ‚)
 End Function

@@ -19,48 +19,48 @@ Sub filter()
     
     
     
-    MsgBox "Откойте файл заказа в нужной папке" & vbCrLf & "*****************************************"
-    'Открываем рабочий файл
-    order_file = Application.GetOpenFilename("Excel files(*.xls*),*.xls*", 1, "Выбрать Excel файлы", , False)
+    MsgBox "РћС‚РєРѕР№С‚Рµ С„Р°Р№Р» Р·Р°РєР°Р·Р° РІ РЅСѓР¶РЅРѕР№ РїР°РїРєРµ" & vbCrLf & "*****************************************"
+    'РћС‚РєСЂС‹РІР°РµРј СЂР°Р±РѕС‡РёР№ С„Р°Р№Р»
+    order_file = Application.GetOpenFilename("Excel files(*.xls*),*.xls*", 1, "Р’С‹Р±СЂР°С‚СЊ Excel С„Р°Р№Р»С‹", , False)
     
     If VarType(order_file) = vbBoolean Then
-        'Была нажата кнопка отмены-выход из процедуры
+        'Р‘С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° РѕС‚РјРµРЅС‹-РІС‹С…РѕРґ РёР· РїСЂРѕС†РµРґСѓСЂС‹
         Exit Sub
     End If
     
-    'Выбираем строку к которой будут применены фильтры
+    'Р’С‹Р±РёСЂР°РµРј СЃС‚СЂРѕРєСѓ Рє РєРѕС‚РѕСЂРѕР№ Р±СѓРґСѓС‚ РїСЂРёРјРµРЅРµРЅС‹ С„РёР»СЊС‚СЂС‹
     Set filter_range = Application.InputBox _
-    ("Введите диапазон строки для фильтра" & vbCrLf & "например A2:AX2 или 2:2" _
-    & vbCrLf & "Или выберете диапазон мышкой", Type:=8)
+    ("Р’РІРµРґРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃС‚СЂРѕРєРё РґР»СЏ С„РёР»СЊС‚СЂР°" & vbCrLf & "РЅР°РїСЂРёРјРµСЂ A2:AX2 РёР»Рё 2:2" _
+    & vbCrLf & "РР»Рё РІС‹Р±РµСЂРµС‚Рµ РґРёР°РїР°Р·РѕРЅ РјС‹С€РєРѕР№", Type:=8)
     
-    'Выбираем номер колонки в котором будем выбирать условия фильтрации
+    'Р’С‹Р±РёСЂР°РµРј РЅРѕРјРµСЂ РєРѕР»РѕРЅРєРё РІ РєРѕС‚РѕСЂРѕРј Р±СѓРґРµРј РІС‹Р±РёСЂР°С‚СЊ СѓСЃР»РѕРІРёСЏ С„РёР»СЊС‚СЂР°С†РёРё
     filter_column = Application.InputBox _
-    ("Введите номер колонки где будете выбирать фильтр" & vbCrLf & "например 2", Type:=1)
+    ("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РєРѕР»РѕРЅРєРё РіРґРµ Р±СѓРґРµС‚Рµ РІС‹Р±РёСЂР°С‚СЊ С„РёР»СЊС‚СЂ" & vbCrLf & "РЅР°РїСЂРёРјРµСЂ 2", Type:=1)
     
-    'Добавляем данные из колонки, которую выбрали ранее, и добавляем в коллекию уникальные значения.
+    'Р”РѕР±Р°РІР»СЏРµРј РґР°РЅРЅС‹Рµ РёР· РєРѕР»РѕРЅРєРё, РєРѕС‚РѕСЂСѓСЋ РІС‹Р±СЂР°Р»Рё СЂР°РЅРµРµ, Рё РґРѕР±Р°РІР»СЏРµРј РІ РєРѕР»Р»РµРєРёСЋ СѓРЅРёРєР°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ.
     On Error Resume Next
     For Each user_choice In Range(Cells(filter_column + 1, filter_column), Cells(Rows.Count, filter_column).End(xlUp))
         user_choice_collection.Add user_choice.Value, user_choice.Value
     Next user_choice
     On Error GoTo 0
     
-    'Обходим коллекцию в цикле и добавляем занчения в UserForms
+    'РћР±С…РѕРґРёРј РєРѕР»Р»РµРєС†РёСЋ РІ С†РёРєР»Рµ Рё РґРѕР±Р°РІР»СЏРµРј Р·Р°РЅС‡РµРЅРёСЏ РІ UserForms
     For Each user_choice In user_choice_collection
         UserForm1.ComboBox1.AddItem user_choice
     Next user_choice
     
-    'Показываем пользователю UserForms
+    'РџРѕРєР°Р·С‹РІР°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ UserForms
     UserForm1.Show
-    'Присваиваем в переменную данные из UserForms которые выбрал пользователь в качестве фильтра
+    'РџСЂРёСЃРІР°РёРІР°РµРј РІ РїРµСЂРµРјРµРЅРЅСѓСЋ РґР°РЅРЅС‹Рµ РёР· UserForms РєРѕС‚РѕСЂС‹Рµ РІС‹Р±СЂР°Р» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІ РєР°С‡РµСЃС‚РІРµ С„РёР»СЊС‚СЂР°
     user_criterial = UserForm1.ComboBox1.Value
     
-    'Фильтруем документ по указанным ранее критериям
+    'Р¤РёР»СЊС‚СЂСѓРµРј РґРѕРєСѓРјРµРЅС‚ РїРѕ СѓРєР°Р·Р°РЅРЅС‹Рј СЂР°РЅРµРµ РєСЂРёС‚РµСЂРёСЏРј
     With ActiveWorkbook.Worksheets(1).Range(filter_range.Address)
         .AutoFilter Field:=filter_column, Criteria1:=user_criterial, VisibleDropDown:=True
     End With
     
    Set all_list_range = ActiveWorkbook.Worksheets(1).Range(Cells(Rows.Count, 1).End(xlUp), Cells(1, Columns.Count))
-   header_array = Array("артикул пп", "фото", "пол", "цвет поставщика", _
+   header_array = Array("Р°СЂС‚РёРєСѓР» РїРї", "С„РѕС‚Рѕ", "РїРѕР»", "С†РІРµС‚ РїРѕСЃС‚Р°РІС‰РёРєР°", _
    "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42" _
    , "43", "44", "45", "46", "47", "48")
    j = 6
@@ -72,7 +72,7 @@ Sub filter()
         .Range(Cells(coord_row, coord_column).Address(0, 0), _
         Cells(Rows.Count, coord_column).End(xlUp).Address(0, 0)).SpecialCells(xlCellTypeVisible).Address
         For Each item In Application.ActiveWorkbook.Worksheets(1).Range(fill_range)
-            Application.Workbooks("тест1.xlsx").Worksheets(1).Cells(j, q) = item.Value
+            Application.Workbooks("С‚РµСЃС‚1.xlsx").Worksheets(1).Cells(j, q) = item.Value
             j = j + 1
         Next item
         j = 6
@@ -89,7 +89,7 @@ Sub filter()
    
    
   
-    'Очищаем UserForms
+    'РћС‡РёС‰Р°РµРј UserForms
     UserForm1.ComboBox1.Clear
     
     

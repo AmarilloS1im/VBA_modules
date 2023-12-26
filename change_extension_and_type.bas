@@ -4,9 +4,9 @@ Sub SaveAs_Mass()
     Dim wb As Workbook
     Dim lPos As Long, lFileFormat As Long, IsDelOriginal As Boolean
   
-    'указываем новый формат файлов
-    sNewEx = InputBox("Укажите новое расширение для файлов:", "Формат", "xlsx")
-    'определяем числовой код формата файлов
+    'СѓРєР°Р·С‹РІР°РµРј РЅРѕРІС‹Р№ С„РѕСЂРјР°С‚ С„Р°Р№Р»РѕРІ
+    sNewEx = InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРІРѕРµ СЂР°СЃС€РёСЂРµРЅРёРµ РґР»СЏ С„Р°Р№Р»РѕРІ:", "Р¤РѕСЂРјР°С‚", "xlsx")
+    'РѕРїСЂРµРґРµР»СЏРµРј С‡РёСЃР»РѕРІРѕР№ РєРѕРґ С„РѕСЂРјР°С‚Р° С„Р°Р№Р»РѕРІ
     Select Case sNewEx
         Case "xlt": lFileFormat = 17
         Case "xla": lFileFormat = 18
@@ -18,36 +18,36 @@ Sub SaveAs_Mass()
         Case "xlam": lFileFormat = 55
         Case "xls": lFileFormat = 56
         Case "csv": lFileFormat = 6
-        'если указанный формат не соответсвует ни одному из существующих
+        'РµСЃР»Рё СѓРєР°Р·Р°РЅРЅС‹Р№ С„РѕСЂРјР°С‚ РЅРµ СЃРѕРѕС‚РІРµС‚СЃРІСѓРµС‚ РЅРё РѕРґРЅРѕРјСѓ РёР· СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёС…
         Case Else
-            MsgBox "Формат '" & sNewEx & "' не поддерживается", vbCritical, "www.excel-vba.ru"
+            MsgBox "Р¤РѕСЂРјР°С‚ '" & sNewEx & "' РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ", vbCritical, "www.excel-vba.ru"
             Exit Sub
     End Select
   
-    '   если надо просматривать файлы в той же папке, что и файл с кодом:
+    '   РµСЃР»Рё РЅР°РґРѕ РїСЂРѕСЃРјР°С‚СЂРёРІР°С‚СЊ С„Р°Р№Р»С‹ РІ С‚РѕР№ Р¶Рµ РїР°РїРєРµ, С‡С‚Рѕ Рё С„Р°Р№Р» СЃ РєРѕРґРѕРј:
     '       sFolder = ThisWorkbook.Path
-    'диалог запроса выбора папки с файлами
+    'РґРёР°Р»РѕРі Р·Р°РїСЂРѕСЃР° РІС‹Р±РѕСЂР° РїР°РїРєРё СЃ С„Р°Р№Р»Р°РјРё
     With Application.FileDialog(msoFileDialogFolderPicker)
         If .Show = False Then Exit Sub
         sFolder = .SelectedItems(1)
     End With
     sFolder = sFolder & IIf(Right(sFolder, 1) = Application.PathSeparator, "", Application.PathSeparator)
-    'запрашиваем - удалять ли исходные файлы после сохранения в новом формате
-    IsDelOriginal = MsgBox("Удалять исходные файлы после пересохранения?", vbQuestion + vbYesNo, "") = vbYes
-    'отключаем обновление экрана и показ системных сообщений
+    'Р·Р°РїСЂР°С€РёРІР°РµРј - СѓРґР°Р»СЏС‚СЊ Р»Рё РёСЃС…РѕРґРЅС‹Рµ С„Р°Р№Р»С‹ РїРѕСЃР»Рµ СЃРѕС…СЂР°РЅРµРЅРёСЏ РІ РЅРѕРІРѕРј С„РѕСЂРјР°С‚Рµ
+    IsDelOriginal = MsgBox("РЈРґР°Р»СЏС‚СЊ РёСЃС…РѕРґРЅС‹Рµ С„Р°Р№Р»С‹ РїРѕСЃР»Рµ РїРµСЂРµСЃРѕС…СЂР°РЅРµРЅРёСЏ?", vbQuestion + vbYesNo, "") = vbYes
+    'РѕС‚РєР»СЋС‡Р°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ СЌРєСЂР°РЅР° Рё РїРѕРєР°Р· СЃРёСЃС‚РµРјРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№
     Application.ScreenUpdating = 0
     Application.DisplayAlerts = 0
     Dim sh As Worksheet
-    'просматриваем все файлы Excel в выбранной папке
+    'РїСЂРѕСЃРјР°С‚СЂРёРІР°РµРј РІСЃРµ С„Р°Р№Р»С‹ Excel РІ РІС‹Р±СЂР°РЅРЅРѕР№ РїР°РїРєРµ
     sFiles = Dir(sFolder & "*.xls*")
     Do While sFiles <> ""
         If sFiles <> ThisWorkbook.Name Then
-            'получаем имя файла без расширения
+            'РїРѕР»СѓС‡Р°РµРј РёРјСЏ С„Р°Р№Р»Р° Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ
             lPos = InStrRev(sFiles, ".")
             sNonEx = Mid(sFiles, 1, lPos)
-            'открываем книгу
+            'РѕС‚РєСЂС‹РІР°РµРј РєРЅРёРіСѓ
             Set wb = Application.Workbooks.Open(sFolder & sFiles, False)
-            'сохраняем в новом формате и закрываем
+            'СЃРѕС…СЂР°РЅСЏРµРј РІ РЅРѕРІРѕРј С„РѕСЂРјР°С‚Рµ Рё Р·Р°РєСЂС‹РІР°РµРј
             Select Case lFileFormat
             Case 24
                 wb.Activate
@@ -60,7 +60,7 @@ Sub SaveAs_Mass()
             End Select
             wb.Close 0
             DoEvents
-            'если надо удалить исходные файлы после преобразования
+            'РµСЃР»Рё РЅР°РґРѕ СѓРґР°Р»РёС‚СЊ РёСЃС…РѕРґРЅС‹Рµ С„Р°Р№Р»С‹ РїРѕСЃР»Рµ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ
             If IsDelOriginal Then
                 On Error Resume Next
                 Kill sFolder & sFiles
@@ -70,8 +70,8 @@ Sub SaveAs_Mass()
         End If
         sFiles = Dir
     Loop
-    'возвращаем обновление экрана и показ системных сообщений
+    'РІРѕР·РІСЂР°С‰Р°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ СЌРєСЂР°РЅР° Рё РїРѕРєР°Р· СЃРёСЃС‚РµРјРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№
     Application.ScreenUpdating = 1
     Application.DisplayAlerts = 1
-    MsgBox "Файлы преобразованы", vbInformation, ""
+    MsgBox "Р¤Р°Р№Р»С‹ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅС‹", vbInformation, ""
 End Sub

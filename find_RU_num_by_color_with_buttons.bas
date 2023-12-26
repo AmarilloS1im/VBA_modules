@@ -4,7 +4,7 @@ Public second_button_exist As String
 Public quit_button_exist As String
 Public user_range As String
 Function choose_range()
-    user_range = Application.InputBox("выберите диапазон поиска", Type:=8).Address
+    user_range = Application.InputBox("РІС‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ РїРѕРёСЃРєР°", Type:=8).Address
     choose_range = user_range
 End Function
 Function terminate_sub()
@@ -19,33 +19,33 @@ Function terminate_sub()
     ThisWorkbook.Application.EnableEvents = False
 End Function
 Function create_button(ByVal ra As Range, Optional ByVal ButtonColor As Long = 255, _
-                       Optional ByVal ButtonName$ = "Запуск", Optional ByVal MacroName As String = "")
-    ' Функция рисует автофигуру (прямоугольник) поверх диапазона ячеек ra
-    ' и окрашивает созданную кнопку (с названием ) в цвет Button_color
-    ' Созданной кнопке назначается макрос MacroName
+                       Optional ByVal ButtonName$ = "Р—Р°РїСѓСЃРє", Optional ByVal MacroName As String = "")
+    ' Р¤СѓРЅРєС†РёСЏ СЂРёСЃСѓРµС‚ Р°РІС‚РѕС„РёРіСѓСЂСѓ (РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє) РїРѕРІРµСЂС… РґРёР°РїР°Р·РѕРЅР° СЏС‡РµРµРє ra
+    ' Рё РѕРєСЂР°С€РёРІР°РµС‚ СЃРѕР·РґР°РЅРЅСѓСЋ РєРЅРѕРїРєСѓ (СЃ РЅР°Р·РІР°РЅРёРµРј ) РІ С†РІРµС‚ Button_color
+    ' РЎРѕР·РґР°РЅРЅРѕР№ РєРЅРѕРїРєРµ РЅР°Р·РЅР°С‡Р°РµС‚СЃСЏ РјР°РєСЂРѕСЃ MacroName
     On Error Resume Next: Err.Clear
     w = ra.Width: h = ra.Height: l = ra.Left: t = ra.Top
-    w = IIf(w >= 10, w, 50): h = IIf(h >= 10, h, 50)    ' не создаём маленькие кнопки - минимум 10*10
+    w = IIf(w >= 10, w, 50): h = IIf(h >= 10, h, 50)    ' РЅРµ СЃРѕР·РґР°С‘Рј РјР°Р»РµРЅСЊРєРёРµ РєРЅРѕРїРєРё - РјРёРЅРёРјСѓРј 10*10
 
-    ' добавляем кнопку на лист
+    ' РґРѕР±Р°РІР»СЏРµРј РєРЅРѕРїРєСѓ РЅР° Р»РёСЃС‚
     Dim sha As Shape: Set sha = ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, l, t, w, h)
-    With sha    ' оформляем автофигуру
+    With sha    ' РѕС„РѕСЂРјР»СЏРµРј Р°РІС‚РѕС„РёРіСѓСЂСѓ
         .Fill.Visible = msoTrue: .Fill.Solid
         .Fill.ForeColor.RGB = ButtonColor: .Fill.Transparency = 0.3
         .Fill.BackColor.RGB = vbWhite
-        .Fill.OneColorGradient msoGradientHorizontal, 4, 0 ' градиентная заливка
+        .Fill.OneColorGradient msoGradientHorizontal, 4, 0 ' РіСЂР°РґРёРµРЅС‚РЅР°СЏ Р·Р°Р»РёРІРєР°
         .Adjustments.item(1) = 0.23: .Placement = xlFreeFloating
-        .OLEFormat.Object.PrintObject = False    ' кнопки не выводятся на печать
-        .Line.Weight = 0.25: .Line.ForeColor.RGB = vbBlack ' делаем тонкий черный контур
-        With .TextFrame    ' добавляем и форматируем текст
-            .Characters.Text = ButtonName$ ' добавляем текст
-            With .Characters.Font ' изменяем начертание текста
+        .OLEFormat.Object.PrintObject = False    ' РєРЅРѕРїРєРё РЅРµ РІС‹РІРѕРґСЏС‚СЃСЏ РЅР° РїРµС‡Р°С‚СЊ
+        .Line.Weight = 0.25: .Line.ForeColor.RGB = vbBlack ' РґРµР»Р°РµРј С‚РѕРЅРєРёР№ С‡РµСЂРЅС‹Р№ РєРѕРЅС‚СѓСЂ
+        With .TextFrame    ' РґРѕР±Р°РІР»СЏРµРј Рё С„РѕСЂРјР°С‚РёСЂСѓРµРј С‚РµРєСЃС‚
+            .Characters.Text = ButtonName$ ' РґРѕР±Р°РІР»СЏРµРј С‚РµРєСЃС‚
+            With .Characters.Font ' РёР·РјРµРЅСЏРµРј РЅР°С‡РµСЂС‚Р°РЅРёРµ С‚РµРєСЃС‚Р°
                 .Size = IIf(h >= 16, 10, 8): .Bold = True:
-                .Color = vbBlack: .Name = "Arial" ' цвет и шрифт
+                .Color = vbBlack: .Name = "Arial" ' С†РІРµС‚ Рё С€СЂРёС„С‚
             End With
             .HorizontalAlignment = xlCenter: .VerticalAlignment = xlVAlignCenter
         End With
-        .OnAction = MacroName    ' назначаем кнопке макрос (если он задан в параметрах)
+        .OnAction = MacroName    ' РЅР°Р·РЅР°С‡Р°РµРј РєРЅРѕРїРєРµ РјР°РєСЂРѕСЃ (РµСЃР»Рё РѕРЅ Р·Р°РґР°РЅ РІ РїР°СЂР°РјРµС‚СЂР°С…)
     End With
 End Function
 Sub find_RU_num_by_color()
@@ -68,37 +68,37 @@ Sub find_RU_num_by_color()
     Set q_b_range = ActiveWorkbook.ActiveSheet.Range("J1:L3")
     
     If first_button_exist = "" Then
-        Call create_button(ra, 3574037, "Найти цвет", "find_RU_num_by_color")
+        Call create_button(ra, 3574037, "РќР°Р№С‚Рё С†РІРµС‚", "find_RU_num_by_color")
         first_button_exist = "buttno allready exist"
     Else
     End If
     
     If second_button_exist = "" Then
-        Call create_button(ra_2, 14318848, "Задать/Сменить диапазон", "choose_range")
+        Call create_button(ra_2, 14318848, "Р—Р°РґР°С‚СЊ/РЎРјРµРЅРёС‚СЊ РґРёР°РїР°Р·РѕРЅ", "choose_range")
         second_button_exist = "buttno allready exist"
     Else
     End If
     
     If quit_button_exist = "" Then
-        Call create_button(q_b_range, 5460991, "Закончить работу и удалить кнопки", "terminate_sub")
+        Call create_button(q_b_range, 5460991, "Р—Р°РєРѕРЅС‡РёС‚СЊ СЂР°Р±РѕС‚Сѓ Рё СѓРґР°Р»РёС‚СЊ РєРЅРѕРїРєРё", "terminate_sub")
         quit_button_exist = "buttno allready exist"
     Else
     End If
     
 
     If user_range = "" Then
-        MsgBox "Задайте диапазон поиска"
+        MsgBox "Р—Р°РґР°Р№С‚Рµ РґРёР°РїР°Р·РѕРЅ РїРѕРёСЃРєР°"
         Exit Sub
     Else
-        user_color = Split(Application.InputBox("Введите цвета один или несколько через запятую", Type:=2), ",")
+        user_color = Split(Application.InputBox("Р’РІРµРґРёС‚Рµ С†РІРµС‚Р° РѕРґРёРЅ РёР»Рё РЅРµСЃРєРѕР»СЊРєРѕ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ", Type:=2), ",")
         
         Set my_range = ActiveWorkbook.Worksheets(1).Range(user_range)
         
         For Each i_color In user_color
             On Error Resume Next
             For Each cellcheck In my_range
-                'Чтобы изменить поиск с точного совпадения на частичное совпадение нужно
-                'поменять значение параметра LookAt с 1 на 2
+                'Р§С‚РѕР±С‹ РёР·РјРµРЅРёС‚СЊ РїРѕРёСЃРє СЃ С‚РѕС‡РЅРѕРіРѕ СЃРѕРІРїР°РґРµРЅРёСЏ РЅР° С‡Р°СЃС‚РёС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ РЅСѓР¶РЅРѕ
+                'РїРѕРјРµРЅСЏС‚СЊ Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР° LookAt СЃ 1 РЅР° 2
                 If Not cellcheck.Find(i_color, LookAt:=1) Is Nothing Then
                     myDict.Add Cells(my_range.Row, cellcheck.Column), Cells(cellcheck.Row, cellcheck.Column)
                  Else
@@ -125,12 +125,12 @@ Sub find_RU_num_by_color()
         
         
         If output_string = "" Then
-            MsgBox "Следующие цвета не найдены в указанном диапазоне:" & vbCrLf & error_string
+            MsgBox "РЎР»РµРґСѓСЋС‰РёРµ С†РІРµС‚Р° РЅРµ РЅР°Р№РґРµРЅС‹ РІ СѓРєР°Р·Р°РЅРЅРѕРј РґРёР°РїР°Р·РѕРЅРµ:" & vbCrLf & error_string
         Else
             If error_string = "" Then
                 MsgBox output_string
             Else
-                MsgBox output_string & vbCrLf & vbCrLf & "Следующие цвета не найдены или указаны некорректно:" & vbCrLf & error_string
+                MsgBox output_string & vbCrLf & vbCrLf & "РЎР»РµРґСѓСЋС‰РёРµ С†РІРµС‚Р° РЅРµ РЅР°Р№РґРµРЅС‹ РёР»Рё СѓРєР°Р·Р°РЅС‹ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ:" & vbCrLf & error_string
             End If
         End If
     End If

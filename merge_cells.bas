@@ -10,8 +10,8 @@ Sub merge_cells()
     Dim user_merge_range As Range
     
     
-    Set user_range = Application.InputBox("Выберите диапазон с артикулами: ", Type:=8)
-    Set user_merge_range = Application.InputBox("Выберите диапазон в котором хотите объеденить ячейки: ", Type:=8)
+    Set user_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ Р°СЂС‚РёРєСѓР»Р°РјРё: ", Type:=8)
+    Set user_merge_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ РІ РєРѕС‚РѕСЂРѕРј С…РѕС‚РёС‚Рµ РѕР±СЉРµРґРµРЅРёС‚СЊ СЏС‡РµР№РєРё: ", Type:=8)
     
     
     Set user_range = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Count, user_range.Column).End(xlUp))

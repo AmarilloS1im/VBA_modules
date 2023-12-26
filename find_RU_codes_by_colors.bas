@@ -16,12 +16,12 @@ Attribute find_RU_codes_by_colors.VB_ProcData.VB_Invoke_Func = " \n14"
     
     user_range = "A4:CF50"
   
-    'user_range = Application.InputBox("выберите диапазон поиска", Type:=8).Address
-    'Специально захардкодил рейндж, чтоб не выбирать постоянно
+    'user_range = Application.InputBox("РІС‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ РїРѕРёСЃРєР°", Type:=8).Address
+    'РЎРїРµС†РёР°Р»СЊРЅРѕ Р·Р°С…Р°СЂРґРєРѕРґРёР» СЂРµР№РЅРґР¶, С‡С‚РѕР± РЅРµ РІС‹Р±РёСЂР°С‚СЊ РїРѕСЃС‚РѕСЏРЅРЅРѕ
 
     
     
-    user_color = Split(Application.InputBox("Введите цвета один или несколько через запятую", Type:=2), ",")
+    user_color = Split(Application.InputBox("Р’РІРµРґРёС‚Рµ С†РІРµС‚Р° РѕРґРёРЅ РёР»Рё РЅРµСЃРєРѕР»СЊРєРѕ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ", Type:=2), ",")
     
 
     Set my_range = ActiveWorkbook.Worksheets(1).Range(user_range)
@@ -30,8 +30,8 @@ Attribute find_RU_codes_by_colors.VB_ProcData.VB_Invoke_Func = " \n14"
     For Each i_color In user_color
         On Error Resume Next
         For Each cellcheck In my_range
-            'Чтобы изменить поиск с точного совпадения на частичное совпадение нужно
-            'поменять значение параметра LookAt с 1 на 2
+            'Р§С‚РѕР±С‹ РёР·РјРµРЅРёС‚СЊ РїРѕРёСЃРє СЃ С‚РѕС‡РЅРѕРіРѕ СЃРѕРІРїР°РґРµРЅРёСЏ РЅР° С‡Р°СЃС‚РёС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ РЅСѓР¶РЅРѕ
+            'РїРѕРјРµРЅСЏС‚СЊ Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР° LookAt СЃ 1 РЅР° 2
             If Not cellcheck.Find(i_color, LookAt:=1) Is Nothing Then
                 myDict.Add Cells(my_range.Row, cellcheck.Column), Cells(cellcheck.Row, cellcheck.Column)
              Else
@@ -58,12 +58,12 @@ Attribute find_RU_codes_by_colors.VB_ProcData.VB_Invoke_Func = " \n14"
     
     
     If output_string = "" Then
-        MsgBox "Следующие цвета не найдены в указанном диапазоне:" & vbCrLf & error_string
+        MsgBox "РЎР»РµРґСѓСЋС‰РёРµ С†РІРµС‚Р° РЅРµ РЅР°Р№РґРµРЅС‹ РІ СѓРєР°Р·Р°РЅРЅРѕРј РґРёР°РїР°Р·РѕРЅРµ:" & vbCrLf & error_string
     Else
         If error_string = "" Then
             MsgBox output_string
         Else
-            MsgBox output_string & vbCrLf & vbCrLf & "Следующие цвета не найдены или указаны некорректно:" & vbCrLf & error_string
+            MsgBox output_string & vbCrLf & vbCrLf & "РЎР»РµРґСѓСЋС‰РёРµ С†РІРµС‚Р° РЅРµ РЅР°Р№РґРµРЅС‹ РёР»Рё СѓРєР°Р·Р°РЅС‹ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ:" & vbCrLf & error_string
         End If
     End If
     

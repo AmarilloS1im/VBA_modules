@@ -5,12 +5,12 @@ Sub create_order_template()
     Dim readiness As String
     Dim article As Range
     
-    order_number = InputBox("Введите номер заказа")
-    order_date = InputBox("Введите дату заказа")
-    readiness_date = InputBox("Введите желаемую дату готовности")
+    order_number = InputBox("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р·Р°РєР°Р·Р°")
+    order_date = InputBox("Р’РІРµРґРёС‚Рµ РґР°С‚Сѓ Р·Р°РєР°Р·Р°")
+    readiness_date = InputBox("Р’РІРµРґРёС‚Рµ Р¶РµР»Р°РµРјСѓСЋ РґР°С‚Сѓ РіРѕС‚РѕРІРЅРѕСЃС‚Рё")
     
     With ThisWorkbook.ActiveSheet
-        Cells(1, 1).Value = "Order №"
+        Cells(1, 1).Value = "Order в„–"
         Cells(2, 1).Value = "Order date"
         Cells(3, 1).Value = "Readiness date"
         Cells(4, 1).Value = "Confirmed readiness date by supplier"
@@ -25,7 +25,7 @@ Sub create_order_template()
         Cells(5, 1).Value = "Article"
         Cells(5, 2).Value = "Model"
         Cells(5, 3).Value = "Color"
-        Cells(5, 4).Value = "ART № Rehard"
+        Cells(5, 4).Value = "ART в„– Rehard"
         Cells(5, 5).Value = "Model Rehard"
         Cells(5, 6).Value = "Color Rehard"
         Cells(5, 7).Value = "Gender"
@@ -150,15 +150,15 @@ Sub create_order_template()
     'Dim objCloseBook As Workbook
     
     
-    'MsgBox "Откойте 'Рабочий файл' в нужной папке" & vbCrLf & "*****************************************"
-    'Открываем рабочий файл
-    'order_file = Application.GetOpenFilename("Excel files(*.xls*),*.xls*", 1, "Выбрать Excel файлы", , False)
+    'MsgBox "РћС‚РєРѕР№С‚Рµ 'Р Р°Р±РѕС‡РёР№ С„Р°Р№Р»' РІ РЅСѓР¶РЅРѕР№ РїР°РїРєРµ" & vbCrLf & "*****************************************"
+    'РћС‚РєСЂС‹РІР°РµРј СЂР°Р±РѕС‡РёР№ С„Р°Р№Р»
+    'order_file = Application.GetOpenFilename("Excel files(*.xls*),*.xls*", 1, "Р’С‹Р±СЂР°С‚СЊ Excel С„Р°Р№Р»С‹", , False)
     
-    'Отключаем обновление экрана
+    'РћС‚РєР»СЋС‡Р°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ СЌРєСЂР°РЅР°
     'Application.ScreenUpdating = False
     'Set objCloseBook = Workbooks.Open(order_file)
     'If VarType(order_file) = vbBoolean Then
-        'Была нажата кнопка отмены-выход из процедуры
+        'Р‘С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° РѕС‚РјРµРЅС‹-РІС‹С…РѕРґ РёР· РїСЂРѕС†РµРґСѓСЂС‹
         'Exit Sub
     'End If
     'i = 6

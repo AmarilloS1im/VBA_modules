@@ -1,5 +1,5 @@
 Attribute VB_Name = "create_TNVD_template"
-'Этот модь создает шаблон файла для согласование ТНВЭД кодов
+'Р­С‚РѕС‚ РјРѕРґСЊ СЃРѕР·РґР°РµС‚ С€Р°Р±Р»РѕРЅ С„Р°Р№Р»Р° РґР»СЏ СЃРѕРіР»Р°СЃРѕРІР°РЅРёРµ РўРќР’Р­Р” РєРѕРґРѕРІ
 Sub create_TNVD_template()
     Dim array_file() As String
     Dim i As Integer
@@ -15,14 +15,14 @@ Sub create_TNVD_template()
     
     
     With ThisWorkbook.Worksheets(1)
-        Cells(1, 1).Value = "АРТИКУЛ КАК У ПРОИЗВОДИТЕЛЯ"
-        Cells(1, 2).Value = "КАТЕГОРИЯ"
-        Cells(1, 3).Value = "ФОТО"
-        Cells(1, 4).Value = "ВИД ОБУВИ"
-        Cells(1, 5).Value = "МАТЕРИАЛ ВЕРХА"
-        Cells(1, 6).Value = "модель"
-        Cells(1, 7).Value = "новый артикул"
-        Cells(1, 8).Value = "код ТНВЭД"
+        Cells(1, 1).Value = "РђР РўРРљРЈР› РљРђРљ РЈ РџР РћРР—Р’РћР”РРўР•Р›РЇ"
+        Cells(1, 2).Value = "РљРђРўР•Р“РћР РРЇ"
+        Cells(1, 3).Value = "Р¤РћРўРћ"
+        Cells(1, 4).Value = "Р’РР” РћР‘РЈР’Р"
+        Cells(1, 5).Value = "РњРђРўР•Р РРђР› Р’Р•Р РҐРђ"
+        Cells(1, 6).Value = "РјРѕРґРµР»СЊ"
+        Cells(1, 7).Value = "РЅРѕРІС‹Р№ Р°СЂС‚РёРєСѓР»"
+        Cells(1, 8).Value = "РєРѕРґ РўРќР’Р­Р”"
         .Name = file_name
     End With
         

@@ -23,16 +23,16 @@ Sub packing_split()
     
     last_col_on_sheet = Cells(1, Columns.count).End(xlToRight).Column
     
-    Set user_range = Application.InputBox("Выберите диапазон с номерами коробок: ", Type:=8)
+    Set user_range = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РґРёР°РїР°Р·РѕРЅ СЃ РЅРѕРјРµСЂР°РјРё РєРѕСЂРѕР±РѕРє: ", Type:=8)
     
     Application.ScreenUpdating = False
     
-    'Считаем длину изначального рейнджа с артикулами
+    'РЎС‡РёС‚Р°РµРј РґР»РёРЅСѓ РёР·РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЂРµР№РЅРґР¶Р° СЃ Р°СЂС‚РёРєСѓР»Р°РјРё
     For Each article In Range(user_range.Address)
         count_len = count_len + 1
     Next article
     
-    'Сортируем коробки по возрастанию
+    'РЎРѕСЂС‚РёСЂСѓРµРј РєРѕСЂРѕР±РєРё РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
     Do
         loop_count = 0
         control_num = Range(Cells(user_range.Row, user_range.Column), Cells(user_range.Row, user_range.Column)).Value

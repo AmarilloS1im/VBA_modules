@@ -5,19 +5,19 @@ Sub Import_pictures_form_excel_to_folder()
     Dim lNamesCol As Long, s As String
     Dim picture_type
  
-    s = InputBox("Укажите номер столбца с именами для картинок" & vbNewLine & _
-                 "(0 - столбец в котором сама картинка)")
+    s = InputBox("РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° СЃ РёРјРµРЅР°РјРё РґР»СЏ РєР°СЂС‚РёРЅРѕРє" & vbNewLine & _
+                 "(0 - СЃС‚РѕР»Р±РµС† РІ РєРѕС‚РѕСЂРѕРј СЃР°РјР° РєР°СЂС‚РёРЅРєР°)")
     If StrPtr(s) = 0 Then Exit Sub
     lNamesCol = Val(s)
  
-    sImagesPath = Application.InputBox("Выберите путь к папке в которую нужно сохранить картинки: ", Type:=2) & "\"
+    sImagesPath = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ РїСѓС‚СЊ Рє РїР°РїРєРµ РІ РєРѕС‚РѕСЂСѓСЋ РЅСѓР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ РєР°СЂС‚РёРЅРєРё: ", Type:=2) & "\"
     
-    picture_type = Application.InputBox("Выберите тип изображения:" & vbCrLf & "1 - Автофигуры" _
-    & vbCrLf & "3 - Диаграммы " & vbCrLf & "11 - Связанное изображение" _
-    & vbCrLf & "13 - Картинки" & vbCrLf & "Если не получилось сохранить картинки с первого раза, попробуйте поменять типы изображения" _
+    picture_type = Application.InputBox("Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї РёР·РѕР±СЂР°Р¶РµРЅРёСЏ:" & vbCrLf & "1 - РђРІС‚РѕС„РёРіСѓСЂС‹" _
+    & vbCrLf & "3 - Р”РёР°РіСЂР°РјРјС‹ " & vbCrLf & "11 - РЎРІСЏР·Р°РЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ" _
+    & vbCrLf & "13 - РљР°СЂС‚РёРЅРєРё" & vbCrLf & "Р•СЃР»Рё РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ СЃРѕС…СЂР°РЅРёС‚СЊ РєР°СЂС‚РёРЅРєРё СЃ РїРµСЂРІРѕРіРѕ СЂР°Р·Р°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕРјРµРЅСЏС‚СЊ С‚РёРїС‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ" _
     , Type:=1)
     
-    '& vbCrLf & ""https://learn.microsoft.com/ru-ru/office/vba/api/Office.MsoShapeType"" & vbCrLf & "Если не получилось сохранить картинки с первого раза, попробуйте поменять типы изображения"
+    '& vbCrLf & ""https://learn.microsoft.com/ru-ru/office/vba/api/Office.MsoShapeType"" & vbCrLf & "Р•СЃР»Рё РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ СЃРѕС…СЂР°РЅРёС‚СЊ РєР°СЂС‚РёРЅРєРё СЃ РїРµСЂРІРѕРіРѕ СЂР°Р·Р°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕРјРµРЅСЏС‚СЊ С‚РёРїС‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ"
     
     
     If Dir(sImagesPath, 16) = "" Then
@@ -36,10 +36,10 @@ Sub Import_pictures_form_excel_to_folder()
             Else
                 sName = wsSh.Cells(oObj.TopLeftCell.Row, lNamesCol).Value
             End If
-            'если в ячейке были символы, запрещенные
-            'для использования в качестве имен для файлов - удаляем
+            'РµСЃР»Рё РІ СЏС‡РµР№РєРµ Р±С‹Р»Рё СЃРёРјРІРѕР»С‹, Р·Р°РїСЂРµС‰РµРЅРЅС‹Рµ
+            'РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ РєР°С‡РµСЃС‚РІРµ РёРјРµРЅ РґР»СЏ С„Р°Р№Р»РѕРІ - СѓРґР°Р»СЏРµРј
             sName = CheckName(sName)
-            'если sName в результате пусто - даем имя unnamed_ с порядковым номером
+            'РµСЃР»Рё sName РІ СЂРµР·СѓР»СЊС‚Р°С‚Рµ РїСѓСЃС‚Рѕ - РґР°РµРј РёРјСЏ unnamed_ СЃ РїРѕСЂСЏРґРєРѕРІС‹Рј РЅРѕРјРµСЂРѕРј
             If sName = "" Then
                 li = li + 1
                 sName = "unnamed_" & li
@@ -57,11 +57,11 @@ Sub Import_pictures_form_excel_to_folder()
     wsTmpSh.Delete
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
-    MsgBox "Объекты сохранены в папке: " & sImagesPath, vbInformation
+    MsgBox "РћР±СЉРµРєС‚С‹ СЃРѕС…СЂР°РЅРµРЅС‹ РІ РїР°РїРєРµ: " & sImagesPath, vbInformation
 End Sub
 '---------------------------------------------------------------------------------------
 ' Procedure : CheckName
-' Purpose   : Функция проверки правильности имени
+' Purpose   : Р¤СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё РїСЂР°РІРёР»СЊРЅРѕСЃС‚Рё РёРјРµРЅРё
 '---------------------------------------------------------------------------------------
 Function CheckName(sName As String)
     Dim objRegExp As Object
